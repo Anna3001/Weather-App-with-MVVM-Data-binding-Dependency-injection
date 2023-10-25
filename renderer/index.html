@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My weather app</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body id="knockout-app">
+  <div class="leftSide">
+    
+    <div class="leftSideHeader">
+      <form class="leftForm">
+        <div id="label_container"><label for="city">Enter a location</label></div>
+        <div id="input_container"></span><input type="text" name="city"></div>  
+      </form>
+    </div>
+
+    <div class="city_current_temp_info">
+      <div class="city">
+      <p>WArszWA</p>
+    </div>
+    <div class="current_temp">
+      <span></span>
+      <spam>&deg;C</spam></div>
+
+  </div>
+
+  <div class="rightSide">
+    <div class="rightSideHeader">WeatherApp</div>
+    <div class="details">
+      <div class="option">
+        <p class="title">1 hour forecast:</p>
+        <p class="content">${oneHourForecast.Temperature.Value}<spam>&deg;C</spam></p>
+      </div>
+  
+      <div class="option">
+            <p class="title">12 hour forecast:</p>
+          </div>
+  
+          <table style="width:85%">
+          <tr>
+            <th>Hour</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+          </tr>
+          <tr>
+            <td>Temperature [&deg;C]</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </table>
+  
+      <div class="option" data-bind="with: oneDayForecastVM">
+        <p class="title">1 day forecast:</p>
+        <p class="content" data-bind="text: maxTemperature"><spam>&deg;C</spam></p>
+        <p class="content" data-bind="text: minTemperature"><spam>&deg;C</spam></p>
+      </div>
+  
+      <div class="option">
+            <p class="title">5 days forecast:</p>
+      </div>
+  
+      <table style="width:85%">
+            <tr>
+              <th>Date</th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+            </tr>
+            <tr>
+              <td>Max temperature [&deg;C]</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Min temperature [&deg;C]</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </table>
+    </div>
+  </div>
+  <script type="module" src="viewModels/mainViewModel.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.1/knockout-latest.js"></script>
+</body>
+</html>
