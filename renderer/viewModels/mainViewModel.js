@@ -1,21 +1,27 @@
 import { cityViewModel } from "./cityViewModel.js"
 import { currentWeatherViewModel } from "./currentWeatherViewModel.js"
-import { dailyForecastViewModel } from "./dailyForecastViewModel.js"
-import { hourlyForecastViewModel } from "./hourlyForecastViewModel.js"
+import { fiveDaysForecastViewModel } from "./fiveDaysForecastViewModel.js"
+import { twelveHoursForecastViewModel } from "./twelveHoursForecastViewModel.js";
+import { oneHourForecastViewModel } from "./oneHourForecastViewModel.js"
+import { oneDayForecastViewModel } from "./oneDayForecastViewModel.js";
 
 import { getNewDataAndUpdate } from "../services/accuWeatherService.js"
+
+export let mainVM
 
 export class mainViewModel {
   constructor () {
     var self = this;
     
-    self.cityVM = new cityViewModel();
-    self.currentWeatherVM = new currentWeatherViewModel();
-    self.dailyForecastVM = new dailyForecastViewModel();
-    self.hourlyForecastVM = new hourlyForecastViewModel();
+    self.cityVM = new cityViewModel();  
+    self.currentWeatherVM = new currentWeatherViewModel();  
+    self.oneHourForecastVM = new oneHourForecastViewModel();  
+    self.oneDayForecastVM = new oneDayForecastViewModel();  
+    self.fiveDaysForecastVM = new fiveDaysForecastViewModel();
+    self.twelveHoursForecastVM = new twelveHoursForecastViewModel(); 
 
     self.getCityInformation = function (f) {
-      const cityF = document.querySelector('form').value;
+      const cityF = document.querySelector('input').value;
       getNewDataAndUpdate(cityF);
     };  
   }
@@ -29,23 +35,23 @@ export class mainViewModel {
   }
 
   getOneHourForecast() {
-    return this.hourlyForecastVM;
+    return this.oneHourForecastVM;
   }
 
   getTwelveHoursForecast() {
-    return this.hourlyForecastVM;
+    return this.twelveHoursForecastVM;
   }
 
   getOneDayForecast() {
-    return this.dailyForecastVM;
+    return this.oneDayForecastVM;
   }
 
   getFiveDaysForecast() {
-    return this.dailyForecastVM;
+    return this.fiveDaysForecastVM;
   }
 }
 
 window.onload = function() {
-    const mainVM = new mainViewModel ();
+    mainVM = new mainViewModel ();
     ko.applyBindings(mainVM, document.querySelector("#knockout-app"));
 }  

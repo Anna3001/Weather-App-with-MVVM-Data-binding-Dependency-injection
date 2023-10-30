@@ -1,4 +1,4 @@
-export class dailyForecastViewModel {
+export class fiveDaysForecastViewModel {
   constructor() {
     var self = this;
 

@@ -1,25 +1,25 @@
-import { cityM } from "../models/city.js"
-import { dailyForecastM } from "../models/dailyForecast.js"
-import { hourlyForecastM } from "../models/hourlyForecast.js"
+import { city } from "../models/city.js"
+import { dailyForecast } from "../models/dailyForecast.js"
+import { hourlyForecast } from "../models/hourlyForecast.js"
 
-import { mainViewModel } from "../viewModels/mainViewModel.js"
+import { mainVM } from "../viewModels/mainViewModel.js"
 
-const key = 'Input your key in here';
+const key = 'AKwNW7aIjGTGZixyktAY4qzeBQDiGAlC';
 
-export const getNewDataAndUpdate = async (city) => {
-  const NewCity = await getCity(city);
+export const getNewDataAndUpdate = async (cityy) => {
+  const NewCity = await getCity(cityy);
   const NewWeather = await getWeather(NewCity.key);
   const NewOneDayForecast = await getOneDayForecast(NewCity.key);
   const NewOneHourForecast = await getOneHourForecast(NewCity.key);
-  const NewTwelveHoursForecast = await getTwelveHourForecast(NewCity.key);
-  const NewFiveDayForecast = await getFiveDayForecast(NewCity.key);
+  const NewTwelveHoursForecast = await getTwelveHoursForecast(NewCity.key);
+  const NewFiveDayForecast = await getFiveDaysForecast(NewCity.key);
 
-  mainViewModel.getOneHourForecast().updateData(NewOneHourForecast);
-  mainViewModel.getTwelveHoursForecast().updateData(NewTwelveHoursForecast);
-  mainViewModel.getOneDayForecast().updateData(NewOneDayForecast);
-  mainViewModel.getFiveDaysForecast().updateData(NewFiveDayForecast);
-  mainViewModel.getCity().updateData(NewCity);
-  mainViewModel.getWeather().updateData(NewWeather);
+  mainVM.getOneHourForecast().updateData(NewOneHourForecast);
+  mainVM.getTwelveHoursForecast().updateData(NewTwelveHoursForecast);
+  mainVM.getOneDayForecast().updateData(NewOneDayForecast);
+  mainVM.getFiveDaysForecast().updateData(NewFiveDayForecast);
+  mainVM.getCity().updateData(NewCity);
+  mainVM.getWeather().updateData(NewWeather);
 };
 
 const getOneHourForecast = async (id) => {
@@ -30,7 +30,7 @@ const getOneHourForecast = async (id) => {
   const response = await fetch(base_url + query);
   const data = await response.json();
 
-  return new hourlyForecastM(data[0]);  
+  return new hourlyForecast(data[0]);  
 };
 
 const getTwelveHoursForecast = async (id) => {
@@ -42,7 +42,7 @@ const getTwelveHoursForecast = async (id) => {
   const data = await response.json();
 
   return data.map((oneHour) => {
-    return new hourlyForecastM(oneHour);
+    return new hourlyForecast(oneHour);
   });  
 };
 
@@ -54,7 +54,7 @@ const getOneDayForecast = async (id) => {
   const response = await fetch(base_url + query);
   const data = await response.json();
 
-  return new dailyForecastM(data);
+  return new dailyForecast(data.DailyForecasts[0]);
 };
 
 const getFiveDaysForecast = async (id) => {
@@ -63,10 +63,11 @@ const getFiveDaysForecast = async (id) => {
   const query = `${id}?apikey=${key}&metric=${true}`;
 
   const response = await fetch(base_url + query);
-  const data = await response.json();
+  let data = await response.json();
+  data = data.DailyForecasts
 
   return data.map((oneDay) => {
-    return new dailyForecastM(oneDay);
+    return new dailyForecast(oneDay);
   });
 };
 
@@ -78,18 +79,16 @@ const getWeather = async (id) => {
   const response = await fetch(base_url + query);
   const data = await response.json();
 
-  return new hourlyForecastM(data[0]);
+  return new hourlyForecast(data[0]);
 }; 
 
-const getCity = async (city) => {
+const getCity = async (cityy) => {
 
   const base_url = 'http://dataservice.accuweather.com/locations/v1/cities/search';
-  const query = `?apikey=${key}&q=${city}`;
+  const query = `?apikey=${key}&q=${cityy}`;
 
   const response = await fetch(base_url + query);
   const data = await response.json();
 
-  return new cityM(data[0]);
+  return new city(data[0]);
 };
-
-

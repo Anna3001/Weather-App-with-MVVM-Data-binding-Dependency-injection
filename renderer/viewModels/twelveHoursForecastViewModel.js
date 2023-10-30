@@ -1,4 +1,4 @@
-export class hourlyForecastViewModel {
+export class twelveHoursForecastViewModel {
   constructor() {
     var self = this;
 

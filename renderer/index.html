@@ -6,10 +6,11 @@
   <title>My weather app</title>
   <link rel="stylesheet" href="css/style.css" />
 </head>
+
 <body id="knockout-app">
   <div class="leftSide">
     
-    <div class="leftSideHeader">
+    <div class="leftSideHeader" data-bind="submit: getCityInformation">
       <form class="leftForm">
         <div id="label_container"><label for="city">Enter a location</label></div>
         <div id="input_container"></span><input type="text" name="city"></div>  
@@ -17,96 +18,71 @@
     </div>
 
     <div class="city_current_temp_info">
-      <div class="city">
-      <p>WArszWA</p>
+      <div class="city" data-bind="with: cityVM">
+        <p data-bind="text: city"></p>
+      </div>
+      <div class="current_temp" data-bind="with: currentWeatherVM">
+        <span data-bind="text: temperature"></span>
+      </div>  
     </div>
-    <div class="current_temp">
-      <span></span>
-      <spam>&deg;C</spam></div>
 
   </div>
 
   <div class="rightSide">
     <div class="rightSideHeader">WeatherApp</div>
     <div class="details">
-      <div class="option">
+
+      <div class="option" data-bind="with: oneHourForecastVM.getData()">
         <p class="title">1 hour forecast:</p>
-        <p class="content">${oneHourForecast.Temperature.Value}<spam>&deg;C</spam></p>
+        <p class="content" data-bind="text: temperature.getTemperature()"></p>
       </div>
   
       <div class="option">
-            <p class="title">12 hour forecast:</p>
-          </div>
+        <p class="title">12 hour forecast:</p>
   
-          <table style="width:85%">
-          <tr>
-            <th>Hour</th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-          </tr>
-          <tr>
-            <td>Temperature [&deg;C]</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
+        <table style="width:85%">
+          <thead>
+            <tr data-bind="foreach: twelveHoursForecastVM.getData()">
+              <td data-bind="text: moment"></td>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr data-bind="foreach: twelveHoursForecastVM.getData()">
+              <td data-bind="text: temperature.getTemperature()"></td>
+            </tr>
+          </tbody>
         </table>
+      </div>  
   
-      <div class="option" data-bind="with: oneDayForecastVM">
+      <div class="option" data-bind="with: oneDayForecastVM.getData()">
         <p class="title">1 day forecast:</p>
-        <p class="content" data-bind="text: maxTemperature"><spam>&deg;C</spam></p>
-        <p class="content" data-bind="text: minTemperature"><spam>&deg;C</spam></p>
+        <p class="content" data-bind="text: temperatureMinMax.maxTemperature"></p>
+        <p class="content" data-bind="text: temperatureMinMax.minTemperature"></p>
       </div>
   
-      <div class="option">
-            <p class="title">5 days forecast:</p>
-      </div>
+      <div class="option" data-bind="fiveDaysForecastVM.getData()">
+        <p class="title">5 days forecast:</p>
   
-      <table style="width:85%">
-            <tr>
-              <th>Date</th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
+        <table style="width:85%">
+          <thead>
+            <tr data-bind="foreach: fiveDaysForecastVM.getData()">
+              <td data-bind="text: date"></td>
             </tr>
-            <tr>
-              <td>Max temperature [&deg;C]</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
+          </thead>
+
+          <tbody>
+            <tr data-bind="foreach: fiveDaysForecastVM.getData()">
+              <td data-bind="text: temperatureMinMax.maxTemperature"></td>
             </tr>
-            <tr>
-              <td>Min temperature [&deg;C]</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
+            <tr data-bind="foreach: fiveDaysForecastVM.getData()">
+              <td data-bind="text: temperatureMinMax.minTemperature"></td>
             </tr>
-          </table>
+          </tbody>    
+        </table>
+
+      </div> 
+       
     </div>
   </div>
   <script type="module" src="viewModels/mainViewModel.js" defer></script>

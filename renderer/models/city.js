@@ -1,8 +1,8 @@
-export class cityM {
-  constructor({ Key = "", Country = {} }) {
+export class city {
+  constructor({ Key = "", EnglishName = {} }) {
     var self = this;
 
-    self.name = Country.LocalizedName || "";
+    self.name = EnglishName || "";
     self.key = Key;
   }
 }

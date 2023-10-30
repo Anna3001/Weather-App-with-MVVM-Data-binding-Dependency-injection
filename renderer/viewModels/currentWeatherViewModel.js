@@ -5,7 +5,7 @@ export class currentWeatherViewModel {
     self.temperature = ko.observable("");
   }
 
-  updateData(data) {
+  updateData(data) { 
     this.temperature(data.temperature.getTemperature());
   }
 }
